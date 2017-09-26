@@ -1,5 +1,5 @@
-#2-3-2SimpleLinkedList.c\
-#创建单链表并进行简单操作
+//2-3-2SimpleLinkedList.c\
+//创建单链表并进行简单操作
 
 #include <stdio.h>
 #include <malloc.h>
