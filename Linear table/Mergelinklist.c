@@ -1,4 +1,5 @@
 #Mergelinklist.c
+#合并两个链表
 
 #include <stdio.h>
 #include <malloc.h>
