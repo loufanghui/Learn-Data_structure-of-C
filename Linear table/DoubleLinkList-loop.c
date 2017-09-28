@@ -16,7 +16,7 @@ typedef struct
     struct dnode *rlink;
 }dnode, *dulinklist;
 
-status createlist_l(dulinklist l, int n)
+status createlist_l(dulinklist l, int n)              //创建链表
 {
     srand((unsigned)time(NULL));
     dulinklist p, q;
@@ -42,7 +42,7 @@ status createlist_l(dulinklist l, int n)
     return (1);
 }
 
-void printlist_l(dulinklist l)
+void printlist_l(dulinklist l)                        //打印链表
 {
     dulinklist p = l->llink, q = l;
     printf("\n各节点的数据（正向打印）：");
@@ -60,14 +60,33 @@ void printlist_l(dulinklist l)
     }
 }
 
+status listinsert_l(dulinklist l, elementype e)       //循环双链表的元素插入操作
+{
+    dulinklist p, q;
+    p = (dulinklist)malloc(sizeof(dnode));
+    q = l->llink;
+    p->data = e;
+    p->llink = q;                                     //新节点的llink指针指向首节点的后一个节点
+    q->rlink = p;                                     //首节点的后一个节点的rlink指针指向新节点
+    l->llink = p;                                     //首节点的llink指针指向新节点
+    p->rlink = l;                                     //新节点的rlink指针指向首节点
+    return (1);                                       //将新节点插入到尾节点之后（即第一个有效节点）
+}
+
 int main()
 {
     dulinklist l;
     int n;
+    elementype e;
     l = (dulinklist)malloc(sizeof(dnode));
     l->isheader = 1;
     printf("请输入链表节点的个数：");
     scanf("%d", &n);
     createlist_l(l, n);
+    printlist_l(l);
+    printf("\n请输入要插入的元素值：");
+    scanf("%d", &e);
+    listinsert_l(l, e);
+    printf("\n插入后：\n");
     printlist_l(l);
 }
