@@ -90,14 +90,18 @@ Position Find(ElementType X, BinTree BST)
 
 Position FindMax(BinTree BST)
 {
-    if(BST)
+    if(!BST)
+        return NULL;
+    else
         while(BST->Right)
             BST = BST->Right;
     return BST;
 }
 
 Position FindMin(BinTree BST) {
-    if (BST->Left)
+    if(!BST)
+        return NULL;
+    else if (BST->Left)
         return FindMin(BST->Left);
     else
         return BST;
