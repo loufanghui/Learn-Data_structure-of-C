@@ -14,7 +14,7 @@ typedef struct HeapStruct
     int *Elements;        // 存储元素的数组
     int Size;             // 堆的当前元素个数
     int Capacity;         // 堆的最大容量
-} *MaxHeap, *MinHeap;
+} *MaxHeap;
 
 // 函数原型
 MaxHeap Create(int MaxSize);
@@ -22,22 +22,30 @@ void Insert(MaxHeap H, ElementType item);
 bool IsFull(MaxHeap H);
 bool IsEmpty(MaxHeap H);
 ElementType DeleteMax(MaxHeap H);     // 删除树根
-void ShowHeap(MaxHeap H, int size);
+void ShowHeap(MaxHeap H);
 
 int test()
 {
     srand((unsigned)time(NULL));
-    int size = 5;
-    MaxHeap H = Create(size);           // 初始化一个包含10个元素的堆
+    int size = 10;
+    MaxHeap H = Create(size);           // 初始化一个包含5个元素的堆
     ElementType e;
+    cout << "插入顺序：" << endl;
     for(int i = 0; i < size; i++)
     {
         e = (int)rand() % 100;
         Insert(H, e);                 // 将产生的随机元素插入到堆中
-        cout << e << ' ';             // 打印产生的随机元素
+        if(i < size - 1)
+            cout << e << ',';             // 打印产生的随机元素
+        else
+            cout << e;
     }
     cout << endl;
-    ShowHeap(H, size);
+    cout << "顺序打印最大堆：" << endl;
+    ShowHeap(H);
+    DeleteMax(H);
+    cout << "\n删除后：" << endl;
+    ShowHeap(H);
     return 0;
 }
 
@@ -104,9 +112,8 @@ ElementType DeleteMax(MaxHeap H) {/* 从最大堆中取出键值（即Elements�
     return MaxItem;
 }
 
-void ShowHeap(MaxHeap H, int size)
+void ShowHeap(MaxHeap H)
 {
-    for(int i = 1; i <= size; i++)
+    for(int i = 1; i <= H->Size; i++)
         cout << H->Elements[i] << " ";
 }
-
