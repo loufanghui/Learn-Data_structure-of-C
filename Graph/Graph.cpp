@@ -34,7 +34,7 @@ typedef PtrToGNode MGraph;                        // 定义一个图类型
 // 函数原型
 MGraph CreateGraph(int VertexNum, int EdgeNUm);   // 初始化一个有VertexNum个顶点，EdgeNUm条边的图
 void Insert(MGraph Graph, Vertex v, Vertex w, WeightType data);
-                                                  // 对图进行边的插入操作， v，w分别表示两个顶点，data是插入的边权
+// 对图进行边的插入操作， v，w分别表示两个顶点，data是插入的边权
 void DFS(MGraph Graph, Vertex v);                 // 从某个顶点深度优先遍历
 void BFS(MGraph Graph, Vertex v);                 // 从某个顶点广度优先遍历
 void DFSInGraph(MGraph Graph);                    // 图的深度优先遍历
@@ -107,7 +107,7 @@ void DFSInGraph(MGraph Graph)
     {
         if(!Visited[v])
         {
-            printf("\n--------连通集分割线--------\n");
+            printf("--------连通集分割线--------\n");
             DFS(Graph, v);
         }
     }
@@ -115,22 +115,25 @@ void DFSInGraph(MGraph Graph)
 
 void BFS(MGraph Graph, Vertex v)
 {
-    if(!Visited[v])
+    Visit(v);
+    Visited[v] = true;
+    queue1.push(v);
+    while(!queue1.empty())
     {
-        Visit(v);
-        Visited[v] = true;
+        Vertex next = queue1.front();
+        queue1.pop();
         for(Vertex i = 0; i < Graph->Nv; i++)
         {
-            if(Graph->G[v][i].data > 0 && !Visited[i])
+            if(Graph->G[next][i].data > 0 && !Visited[i])
             {
+                Visit(i);
+                Visited[i] = true;
                 queue1.push(i);
             }
         }
-        Vertex next = queue1.front();
-        queue1.pop();
-        BFS(Graph, next);
     }
 }
+
 
 void BFSInGraph(MGraph Graph)
 {
@@ -139,7 +142,7 @@ void BFSInGraph(MGraph Graph)
     {
         if(!Visited[v])
         {
-            printf("\n--------连通集分割线--------\n");
+            printf("--------连通集分割线--------\n");
             BFS(Graph, v);
         }
     }
