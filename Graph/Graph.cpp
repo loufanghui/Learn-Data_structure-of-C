@@ -1,7 +1,8 @@
 #include <iostream>
 #include <cstdio>
 #include <ctime>
-#include <vector>
+#include <queue>
+
 
 #define MAX_VERTEX_NUM 100                        // 定义最大顶点个数，注意没有分号
 
@@ -11,6 +12,8 @@ vector<bool> Visited(MAX_VERTEX_NUM, false);
 
 typedef int WeightType;                           // 定义权重的类型
 typedef int Vertex;                               // 定义顶点的类型
+
+queue<Vertex> queue1;
 
 /* 邻接矩阵，存放所有边的边权 */
 typedef struct Node
@@ -45,6 +48,9 @@ int test()
     scanf("%d %d", &VertexNum, &EdgeNUm);
     MGraph Graph = CreateGraph(VertexNum, EdgeNUm);
     DFSInGraph(Graph);
+    for(vector<bool> :: iterator it = Visited.begin(); it < Visited.end(); it++)
+        (*it) = false;
+    BFSInGraph(Graph);
     return 0;
 }
 
@@ -96,12 +102,45 @@ void DFS(MGraph Graph, Vertex v)
 
 void DFSInGraph(MGraph Graph)
 {
+    printf("DFS遍历\n");
     for(Vertex v = 0; v < Graph->Nv; v++)
     {
         if(!Visited[v])
         {
             printf("\n--------连通集分割线--------\n");
             DFS(Graph, v);
+        }
+    }
+}
+
+void BFS(MGraph Graph, Vertex v)
+{
+    if(!Visited[v])
+    {
+        Visit(v);
+        Visited[v] = true;
+        for(Vertex i = 0; i < Graph->Nv; i++)
+        {
+            if(Graph->G[v][i].data > 0 && !Visited[i])
+            {
+                queue1.push(i);
+            }
+        }
+        Vertex next = queue1.front();
+        queue1.pop();
+        BFS(Graph, next);
+    }
+}
+
+void BFSInGraph(MGraph Graph)
+{
+    printf("\nBFS遍历\n");
+    for(Vertex v = 0; v < Graph->Nv; v++)
+    {
+        if(!Visited[v])
+        {
+            printf("\n--------连通集分割线--------\n");
+            BFS(Graph, v);
         }
     }
 }
