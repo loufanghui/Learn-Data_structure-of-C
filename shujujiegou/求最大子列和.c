@@ -25,8 +25,8 @@ int main()
 int MaxSubseqSum(vector<int> v, int N)
 {
     int MaxSum, ThisSum;
-    MaxSum = ThisSum = 0;
-    for(int i = 0; i < N; i++)
+    MaxSum = ThisSum = v[0];
+    for(int i = 1; i < N; i++)
     {
         ThisSum += v[i];
         if(ThisSum > MaxSum)
